@@ -4,25 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login</title>
-  <!-- Firebase App (the core Firebase SDK) -->
-  <script src="https://www.gstatic.com/firebasejs/9.5.0/firebase-app.js"></script>
-  <!-- Firebase Authentication -->
-  <script src="https://www.gstatic.com/firebasejs/9.5.0/firebase-auth.js"></script>
-  <script>
-    // Sua configuração do Firebase
-    const firebaseConfig = {
-      apiKey: "SUA_API_KEY",
-      authDomain: "SEU_PROJETO.firebaseapp.com",
-      projectId: "SEU_PROJETO_ID",
-      storageBucket: "SEU_PROJETO.appspot.com",
-      messagingSenderId: "SEU_SENDER_ID",
-      appId: "SEU_APP_ID",
-      measurementId: "SEU_MEASUREMENT_ID"
-    };
-
-    // Inicializar o Firebase
-    firebase.initializeApp(firebaseConfig);
-  </script>
 </head>
 <body>
   <h2>Login</h2>
@@ -36,6 +17,8 @@
     <button type="submit">Login</button>
   </form>
 
+  <!-- Firebase Auth Script -->
+  <script src="/__/firebase/9.5.0/firebase-auth.js"></script>
   <script>
     const loginForm = document.getElementById('loginForm');
 
@@ -46,10 +29,10 @@
       const password = loginForm.password.value;
 
       try {
-        // Autenticar usuário com o Firebase
+        // Authenticate user with Firebase
         const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);
         
-        // Redirecionar para receitas.html após login bem-sucedido
+        // Redirect to receitas.html after successful login
         window.location.href = 'receitas.html';
       } catch (error) {
         alert('Login failed. Check your email and password.');
