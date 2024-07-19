@@ -4,6 +4,45 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Receitas</title>
+  <!-- Firebase App (the core Firebase SDK) -->
+  <script type="module">
+    // Importar as bibliotecas Firebase como módulos
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.5.0/firebase-app.js';
+    import { getAuth, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/9.5.0/firebase-auth.js';
+
+    // Sua configuração do Firebase
+    const firebaseConfig = {
+    apiKey: "AIzaSyCRvFbJquX10Ydb79A9IgVv6PuvreAB3YI",
+    // authDomain: "gsite-65539.firebaseapp.com",
+    // authDomain: "localhost",
+    authDomain: "adeilsonnm.github.io",
+    projectId: "gsite-65539",
+    storageBucket: "gsite-65539.appspot.com",
+    messagingSenderId: "32741284154",
+    appId: "1:32741284154:web:626f96c89131cbff919803",
+    measurementId: "G-KW05V6950H"
+    };
+    // Inicializar o Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // Verificar estado de autenticação
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        // Redirecionar para a página de login se não estiver autenticado
+        window.location.href = 'index.html';
+      }
+    });
+
+    // Função de logout
+    window.logout = () => {
+      signOut(auth).then(() => {
+        window.location.href = 'index.html';
+      }).catch((error) => {
+        console.error('Erro ao fazer logout:', error);
+      });
+    };
+  </script>
 </head>
 <body>
   <h2>Lista de Receitas</h2>
@@ -14,5 +53,7 @@
     <li>Receita 3</li>
     <!-- Adicione mais receitas conforme necessário -->
   </ul>
+  <p>Conteúdo protegido que só deve aparecer para usuários logados.</p>
+  <button onclick="logout()">Logout</button>
 </body>
 </html>
