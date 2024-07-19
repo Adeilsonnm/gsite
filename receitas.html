@@ -6,21 +6,38 @@
   <title>Receitas</title>
   <!-- Firebase App (the core Firebase SDK) -->
   <script type="module">
-    // Importar as bibliotecas Firebase como módulos
+    /**
+     * Importar as bibliotecas Firebase como módulos.
+     * Inicializar o Firebase e configurar a autenticação.
+     */
+
+    // Importar módulos do Firebase
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.5.0/firebase-app.js';
     import { getAuth, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/9.5.0/firebase-auth.js';
     import { firebaseConfig } from './firebaseConfig.js'; // Certifique-se de que o caminho está correto
 
-    // Inicializar o Firebase.
+    /**
+     * Inicializar o Firebase.
+     * @type {firebase.app.App}
+     */
     const app = initializeApp(firebaseConfig);
+
+    /**
+     * Configurar a autenticação Firebase.
+     * @type {firebase.auth.Auth}
+     */
     const auth = getAuth(app);
 
-    // Verificar estado de autenticação
+    /**
+     * Verificar o estado de autenticação.
+     * Redireciona para a página de login se o usuário não estiver autenticado.
+     * @param {firebase.User} user - O usuário autenticado.
+     */
     onAuthStateChanged(auth, (user) => {
       if (!user) {
         // Redirecionar para a página de login se não estiver autenticado
         window.location.href = 'index.html';
-      }else{
+      } else {
         // Usuário está autenticado
         document.getElementById('userEmail').textContent = user.email;
         if (user.displayName) {
@@ -29,7 +46,11 @@
       }
     });
 
-    // Função de logout
+    /**
+     * Função de logout.
+     * Faz o logout do usuário e redireciona para a página de login.
+     * @function
+     */
     window.logout = () => {
       signOut(auth).then(() => {
         window.location.href = 'index.html';
@@ -46,10 +67,9 @@
     <li>Receita 1</li>
     <li>Receita 2</li>
     <li>Receita 3</li>
-    <p>Email do usuário: <span id="userEmail"></span></p>
-    <p>Nome do usuário: <span id="userName"></span></p>
-    <!-- Adicione mais receitas conforme necessário -->
   </ul>
+  <p>Email do usuário: <span id="userEmail"></span></p>
+  <p>Nome do usuário: <span id="userName"></span></p>
   <p>Conteúdo protegido que só deve aparecer para usuários logados.</p>
   <a href="./pedidos.html"><button>Pedidos</button></a>
   <button onclick="logout()">Sair</button>
