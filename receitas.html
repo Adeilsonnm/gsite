@@ -9,19 +9,8 @@
     // Importar as bibliotecas Firebase como módulos
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.5.0/firebase-app.js';
     import { getAuth, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/9.5.0/firebase-auth.js';
+    import { firebaseConfig } from './firebaseConfig.js'; // Certifique-se de que o caminho está correto
 
-    // Sua configuração do Firebase
-    const firebaseConfig = {
-    apiKey: "AIzaSyCRvFbJquX10Ydb79A9IgVv6PuvreAB3YI",
-    // authDomain: "gsite-65539.firebaseapp.com",
-    // authDomain: "localhost",
-    authDomain: "adeilsonnm.github.io",
-    projectId: "gsite-65539",
-    storageBucket: "gsite-65539.appspot.com",
-    messagingSenderId: "32741284154",
-    appId: "1:32741284154:web:626f96c89131cbff919803",
-    measurementId: "G-KW05V6950H"
-    };
     // Inicializar o Firebase
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
@@ -31,6 +20,12 @@
       if (!user) {
         // Redirecionar para a página de login se não estiver autenticado
         window.location.href = 'index.html';
+      }else{
+        // Usuário está autenticado
+        document.getElementById('userEmail').textContent = user.email;
+        if (user.displayName) {
+          document.getElementById('userName').textContent = user.displayName;
+        }
       }
     });
 
@@ -51,6 +46,8 @@
     <li>Receita 1</li>
     <li>Receita 2</li>
     <li>Receita 3</li>
+    <p>Email do usuário: <span id="userEmail"></span></p>
+    <p>Nome do usuário: <span id="userName"></span></p>
     <!-- Adicione mais receitas conforme necessário -->
   </ul>
   <p>Conteúdo protegido que só deve aparecer para usuários logados.</p>

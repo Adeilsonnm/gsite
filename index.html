@@ -1,68 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login</title>
-  <!-- Firebase App (the core Firebase SDK) -->
-  <script type="module">
-    // Importar as bibliotecas Firebase como módulos
-    import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.5.0/firebase-app.js';
-    import { getAuth, signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/9.5.0/firebase-auth.js';
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <!-- Firebase App (the core Firebase SDK) -->
+    <script type="module">
+        // Importar as bibliotecas Firebase como módulos
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.5.0/firebase-app.js';
+        import { getAuth, signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/9.5.0/firebase-auth.js';
+        import { firebaseConfig } from './firebaseConfig.js'; // Certifique-se de que o caminho está correto
 
-    // Sua configuração do Firebase
-    const firebaseConfig = {
-    apiKey: "AIzaSyCRvFbJquX10Ydb79A9IgVv6PuvreAB3YI",
-    // authDomain: "gsite-65539.firebaseapp.com",
-    // authDomain: "localhost",
-    authDomain: "adeilsonnm.github.io",
-    projectId: "gsite-65539",
-    storageBucket: "gsite-65539.appspot.com",
-    messagingSenderId: "32741284154",
-    appId: "1:32741284154:web:626f96c89131cbff919803",
-    measurementId: "G-KW05V6950H"
-    };
+        // Inicializar o Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
 
-    // Inicializar o Firebase
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-
-    window.firebaseAuth = auth; // Expor o auth para ser usado no script inline
-  </script>
+        window.firebaseAuth = auth; // Expor o auth para ser usado no script inline
+    </script>
 </head>
+
 <body>
-  <h2>Login</h2>
-  <form id="loginForm">
-    <label for="email">Email:</label><br>
-    <input type="email" id="email" name="email" required><br><br>
-    
-    <label for="password">Password:</label><br>
-    <input type="password" id="password" name="password" required><br><br>
-    
-    <button type="submit">Login</button>
-  </form>
+    <h2>Login</h2>
+    <form id="loginForm">
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email" required><br><br>
 
-  <script type="module">
-    const loginForm = document.getElementById('loginForm');
-    import { signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/9.5.0/firebase-auth.js';
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password" required><br><br>
 
-    loginForm.addEventListener('submit', async (event) => {
-      event.preventDefault();
-      
-      const email = loginForm.email.value;
-      const password = loginForm.password.value;
+        <button type="submit">Login</button>
+    </form>
 
-      try {
-        // Autenticar usuário com o Firebase
-        const userCredential = await signInWithEmailAndPassword(window.firebaseAuth, email, password);
-        
-        // Redirecionar para receitas.html após login bem-sucedido
-        window.location.href = 'receitas.html';
-      } catch (error) {
-        alert('Login failed. Check your email and password.');
-        console.error(error);
-      }
-    });
-  </script>
+    <script type="module">
+        const loginForm = document.getElementById('loginForm');
+        import { signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/9.5.0/firebase-auth.js';
+
+        loginForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const email = loginForm.email.value;
+            const password = loginForm.password.value;
+
+            try {
+                // Autenticar usuário com o Firebase
+                const userCredential = await signInWithEmailAndPassword(window.firebaseAuth, email, password);
+
+                // Redirecionar para receitas.html após login bem-sucedido
+                window.location.href = 'receitas.html';
+            } catch (error) {
+                alert('Acesso Negado!');
+                console.error(error);
+            }
+        });
+    </script>
 </body>
+
 </html>
