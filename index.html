@@ -1,56 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <!-- Firebase App (the core Firebase SDK) -->
-    <script src="https://www.gstatic.com/firebasejs/9.5.0/firebase-app.js"></script>
-    <!-- Firebase Authentication -->
-    <script src="https://www.gstatic.com/firebasejs/9.5.0/firebase-auth.js"></script>
-    <script>
-        import { initializeApp } from "./node_modules/firebase/app";
-        import { getAnalytics } from "./node_modules/firebase/analytics";
-    </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <!-- Firebase App (the core Firebase SDK) -->
+  <script type="module">
+    // Importar as bibliotecas Firebase como módulos
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.5.0/firebase-app.js';
+    import { getAuth, signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/9.5.0/firebase-auth.js';
 
-    <script src="db/auth.js"></script>
+    // Sua configuração do Firebase
+    const firebaseConfig = {
+    apiKey: "AIzaSyCRvFbJquX10Ydb79A9IgVv6PuvreAB3YI",
+    // authDomain: "gsite-65539.firebaseapp.com",
+    // authDomain: "localhost",
+    authDomain: "adeilsonnm.github.io",
+    projectId: "gsite-65539",
+    storageBucket: "gsite-65539.appspot.com",
+    messagingSenderId: "32741284154",
+    appId: "1:32741284154:web:626f96c89131cbff919803",
+    measurementId: "G-KW05V6950H"
+    };
 
+    // Inicializar o Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    window.firebaseAuth = auth; // Expor o auth para ser usado no script inline
+  </script>
 </head>
-
 <body>
-    <h2>Login Firebase2</h2>
-    <form id="loginForm">
-        <label for="email">Email:</label><br>
-        <input type="email" id="email" name="email" required><br><br>
+  <h2>Login</h2>
+  <form id="loginForm">
+    <label for="email">Email:</label><br>
+    <input type="email" id="email" name="email" required><br><br>
+    
+    <label for="password">Password:</label><br>
+    <input type="password" id="password" name="password" required><br><br>
+    
+    <button type="submit">Login</button>
+  </form>
 
-        <label for="password">Password:</label><br>
-        <input type="password" id="password" name="password" required><br><br>
+  <script type="module">
+    const loginForm = document.getElementById('loginForm');
+    import { signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/9.5.0/firebase-auth.js';
 
-        <button type="submit">Login</button>
-    </form>
+    loginForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      
+      const email = loginForm.email.value;
+      const password = loginForm.password.value;
 
-    <script>
-        const loginForm = document.getElementById('loginForm');
-
-        loginForm.addEventListener('submit', async (event) => {
-            event.preventDefault();
-
-            const email = loginForm.email.value;
-            const password = loginForm.password.value;
-
-            try {
-                // Autenticar usuário com o Firebase
-                const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);
-
-                // Redirecionar para receitas.html após login bem-sucedido
-                window.location.href = 'receitas.html';
-            } catch (error) {
-                alert('Login failed. Check your email and password.');
-                console.error(error);
-            }
-        });
-    </script>
+      try {
+        // Autenticar usuário com o Firebase
+        const userCredential = await signInWithEmailAndPassword(window.firebaseAuth, email, password);
+        
+        // Redirecionar para receitas.html após login bem-sucedido
+        window.location.href = 'receitas.html';
+      } catch (error) {
+        alert('Login failed. Check your email and password.');
+        console.error(error);
+      }
+    });
+  </script>
 </body>
-
 </html>
